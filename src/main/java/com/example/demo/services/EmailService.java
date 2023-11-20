@@ -1,9 +1,11 @@
 package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
@@ -16,10 +18,16 @@ public class EmailService {
   }
 
   public void sendEmail(String recipientEmail, String subject, String message) {
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(recipientEmail);
-    email.setSubject(subject);
-    email.setText(message);
-    javaMailSender.send(email);
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+
+    try {
+      helper.setTo(recipientEmail);
+      helper.setSubject(subject);
+      helper.setText(message, false); // Set the second parameter to true to indicate HTML content
+      javaMailSender.send(mimeMessage);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
