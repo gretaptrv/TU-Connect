@@ -55,22 +55,22 @@ public class DatabaseUtility {
   }
 
   private void addTutors(List<Tutor> tutors) {
-    tutors.add(new Tutor("191213546", "Iva", "Nikolova", "02 965-2680", "inni@tu-sofia.bg", "1311", "Computer systems"));
-    tutors.add(new Tutor("191213566", "Milena", "Lazarova", "02 965-2524", "milaz@tu-sofia.bg", "1201", "Computer systems"));
-    tutors.add(new Tutor("191212546", "Boris", "Tudzharov", "02 965-3385", "bntv@tu-sofia.bg", "1203", "Computer Systems"));
-    tutors.add(new Tutor("191213576", "Daniela", "Gotseva", "02 965-2338", "dgoceva@tu-sofia.bg", "1204", "Computer Systems"));
-    tutors.add(new Tutor("191213446", "Ognyan", "Nakov", "02 965-2513", "nakov@tu-sofia.bg", "1443", "Computer Systems"));
-    tutors.add(new Tutor("191213456", "Adelina", "Aleksieva", "02 965-2652", "aaleksieva@tu-sofia.bg", "3311A", "Computer Systems"));
-    tutors.add(new Tutor("191213356", "Antonia", "Tasheva", "02 965-3471", "atasheva@tu-sofia.bg", "3417А", "Computer Systems"));
-    tutors.add(new Tutor("191213457", "Valentin", "Mollov", "02 965-3523", "mollov@tu-sofia.bg", "1200", "Computer Systems"));
-    tutors.add(new Tutor("191213476", "Valentin", "Hristov", "02 965-3054", "v_hristov@tu-sofia.bg", "1323A", "Computer Systems"));
-    tutors.add(new Tutor("191213486", "Georgi", "Zapryanov", "02 965-2680", "gszap@tu-sofia.bg", "1311", "Computer Systems"));
-    tutors.add(new Tutor("191213488", "Petar", "Marinov", "02 965-2224", "pmarinov@tu-sofia.bg", "1205", "Computer Systems"));
-    tutors.add(new Tutor("191213856", "Neven", "Nikolov", "", "n.nikolov@tu-sofia.bg", "1406", "Computer Systems"));
-    tutors.add(new Tutor("191213886", "Rumen", "Trifonov", "", "r_trifonov@tu-sofia.bg", "1326", "Computer Systems"));
-    tutors.add(new Tutor("191213156", "Galya", "Pavlova", "02 965-3523", "raicheva@tu-sofia.bg", "1200", "Computer Systems"));
-    tutors.add(new Tutor("191213416", "Diana", "Grigorova", "02 965-3523", "dgrigorova@tu-sofia.bg", "1200", "Computer Systems"));
-    tutors.add(new Tutor("191213334", "Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1205", "Cyber Security"));
+    tutors.add(new Tutor("191213546", "Iva", "Nikolova", "02 965-2680", "inni@tu-sofia.bg", "1311"));
+    tutors.add(new Tutor("191213566", "Milena", "Lazarova", "02 965-2524", "milaz@tu-sofia.bg", "1201"));
+    tutors.add(new Tutor("191212546", "Boris", "Tudzharov", "02 965-3385", "bntv@tu-sofia.bg", "1203"));
+    tutors.add(new Tutor("191213576", "Daniela", "Gotseva", "02 965-2338", "dgoceva@tu-sofia.bg", "1204"));
+    tutors.add(new Tutor("191213446", "Ognyan", "Nakov", "02 965-2513", "nakov@tu-sofia.bg", "1443"));
+    tutors.add(new Tutor("191213456", "Adelina", "Aleksieva", "02 965-2652", "aaleksieva@tu-sofia.bg", "3311A"));
+    tutors.add(new Tutor("191213356", "Antonia", "Tasheva", "02 965-3471", "atasheva@tu-sofia.bg", "3417А"));
+    tutors.add(new Tutor("191213457", "Valentin", "Mollov", "02 965-3523", "mollov@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("191213476", "Valentin", "Hristov", "02 965-3054", "v_hristov@tu-sofia.bg", "1323A"));
+    tutors.add(new Tutor("191213486", "Georgi", "Zapryanov", "02 965-2680", "gszap@tu-sofia.bg", "1311"));
+    tutors.add(new Tutor("191213488", "Petar", "Marinov", "02 965-2224", "pmarinov@tu-sofia.bg", "1205"));
+    tutors.add(new Tutor("191213856", "Neven", "Nikolov", "", "n.nikolov@tu-sofia.bg", "1406"));
+    tutors.add(new Tutor("191213886", "Rumen", "Trifonov", "", "r_trifonov@tu-sofia.bg", "1326"));
+    tutors.add(new Tutor("191213156", "Galya", "Pavlova", "02 965-3523", "raicheva@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("191213416", "Diana", "Grigorova", "02 965-3523", "dgrigorova@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("191213334", "Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1200"));
   }
 
   private void addStudents(List<Student> students) {

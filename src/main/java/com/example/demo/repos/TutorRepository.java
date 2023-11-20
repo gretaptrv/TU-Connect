@@ -1,5 +1,6 @@
 package com.example.demo.repos;
 
+import com.example.demo.models.Faculty;
 import com.example.demo.models.Tutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,7 @@ public interface TutorRepository extends JpaRepository<Tutor, Long> {
 
     List<Tutor> findAll();
 
-    List<Tutor> findAllByFaculty(String faculty);
+    List<Tutor> findAllByFaculty(Faculty faculty);
 
     @Query("SELECT t FROM Tutor t WHERE t.username = :username")
     Optional<Tutor> findByUsername(@Param("username") String username);

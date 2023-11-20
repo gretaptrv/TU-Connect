@@ -4,11 +4,12 @@ import com.example.demo.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 @Entity
 @Table(name = "TUTOR")
 @Getter
-@Setter
 @NoArgsConstructor
 @SuperBuilder
 public class Tutor extends User {
@@ -27,8 +27,12 @@ public class Tutor extends User {
   @Column(name = "ROOM_NUM", length = 5)
   private String roomNum;
 
+  @ManyToOne
+  @JoinColumn(name = "FACULTY_ID")
+  private Faculty faculty;
+
   @Column(name = "FACULTY")
-  private String faculty;
+  private String facultyId;
 
   @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
   private List<Thesis> theses;
@@ -39,11 +43,10 @@ public class Tutor extends User {
   @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
   private List<Schedule> schedule;
 
-  public Tutor(String fakNum, String firstName, String lastName, String phoneNum, String email, String roomNum, String faculty) {
+  public Tutor(String fakNum, String firstName, String lastName, String phoneNum, String email, String roomNum) {
     super(fakNum, firstName, lastName, email);
     this.phoneNum = phoneNum;
     this.roomNum = roomNum;
-    this.faculty = faculty;
   }
 
   @Override

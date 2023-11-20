@@ -1,9 +1,9 @@
 package com.example.demo.services;
 
-import com.example.demo.dtos.TutorDTO;
 import com.example.demo.models.Schedule;
 import com.example.demo.models.Tutor;
 import com.example.demo.models.VisitingHours;
+import com.example.demo.repos.FacultyRepository;
 import com.example.demo.repos.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,9 @@ public class TutorService {
   @Autowired
   TutorRepository tutors;
 
+  @Autowired
+  FacultyRepository faculties;
+
   public List<Tutor> getAll() {
     return tutors.findAll();
   }
@@ -32,22 +35,12 @@ public class TutorService {
   }
 
   public List<Tutor> getAllByFaculty(String faculty) {
-    return tutors.findAllByFaculty(faculty);
+    return tutors.findAllByFaculty(faculties.findByName(faculty).orElse(null));
   }
 
   public Tutor getByUsername(String username) {
     Optional<Tutor> optionalTutor = tutors.findByUsername(username);
     return optionalTutor.orElse(null);
-  }
-
-  public TutorDTO mapTutor(Tutor tutor) {
-    TutorDTO tut = new TutorDTO();
-    tut.setFaculty(tutor.getFaculty());
-    tut.setPhoneNum(tutor.getPhoneNum());
-    tut.setEmail(tutor.getEmail());
-    tut.setSchedules(this.getSchedules(tutor.getFkNum()));
-
-    return tut;
   }
 
   public List<Schedule> getSchedules(String tutorFN) {
