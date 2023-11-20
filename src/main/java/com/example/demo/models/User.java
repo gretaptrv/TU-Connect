@@ -1,16 +1,31 @@
 package com.example.demo.models;
 
+import com.example.demo.enums.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @MappedSuperclass
 @NoArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
-public abstract class User {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@AllArgsConstructor
+@SuperBuilder
+public abstract class User implements UserDetails {
 
   @Column(name = "USERNAME")
   private String username;
@@ -19,19 +34,29 @@ public abstract class User {
   private String password;
 
   @Id
-  @NonNull
-  @Column(name = "FK_NUM", length = 9, unique = true, nullable = false)
+  @Column(name = "FK_NUM", length = 9, unique = true)
   private String fkNum;
 
-  @NonNull
-  @Column(name = "FIRST_NAME", nullable = false)
+  @Column(name = "FIRST_NAME")
   private String firstName;
 
-  @NonNull
-  @Column(name = "LAST_NAME", nullable = false)
+  @Column(name = "LAST_NAME")
   private String lastName;
 
-  @NonNull
-  @Column(name = "EMAIL", unique = true, nullable = false)
+  @Column(name = "EMAIL", unique = true)
   private String email;
+
+  public User(String fakNum, String firstName, String lastName, String email) {
+    this.fkNum = fakNum;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+  }
+
+  abstract UserRole getRole();
+
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(getRole().name()));
+  }
+
 }

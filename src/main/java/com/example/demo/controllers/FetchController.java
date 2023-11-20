@@ -47,7 +47,7 @@ public class FetchController {
 
 	@GetMapping("/schedules/tutor/{tutorFKN}")
 	public List<Schedule> getSchedulesByTutor(@PathVariable String tutorFKN) {
-		return scheduleService.getByTutor(tutorFKN);
+		return scheduleService.getByTutor(tutorService.getById(tutorFKN).orElse(null));
 	}
 
 }

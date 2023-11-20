@@ -1,8 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.TutorDTO;
 import com.example.demo.models.Schedule;
 import com.example.demo.models.Tutor;
-import com.example.demo.dtos.TutorDTO;
 import com.example.demo.models.VisitingHours;
 import com.example.demo.repos.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,11 @@ public class TutorService {
     return tutors.findAllByFaculty(faculty);
   }
 
+  public Tutor getByUsername(String username) {
+    Optional<Tutor> optionalTutor = tutors.findByUsername(username);
+    return optionalTutor.orElse(null);
+  }
+
   public TutorDTO mapTutor(Tutor tutor) {
     TutorDTO tut = new TutorDTO();
     tut.setFaculty(tutor.getFaculty());
@@ -46,11 +51,14 @@ public class TutorService {
   }
 
   public List<Schedule> getSchedules(String tutorFN) {
-    return scheduleService.getByTutor(tutorFN);
+    return scheduleService.getByTutor(tutors.findByFkNum(tutorFN).orElse(null));
   }
 
   public VisitingHours getVisitingHours(String tutorFN) {
-    return visitingHoursService.getByTutor(tutorFN);
+    return visitingHoursService.getByTutor(getById(tutorFN).orElse(null));
   }
 
+  public void save(Tutor tutor) {
+    tutors.save(tutor);
+  }
 }

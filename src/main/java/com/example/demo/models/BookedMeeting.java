@@ -1,12 +1,13 @@
 package com.example.demo.models;
 
-import com.example.demo.enums.booked.meeting.Status;
+import com.example.demo.enums.status.MeetingStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.sql.Time;
@@ -14,17 +15,17 @@ import java.sql.Time;
 @Entity 
 @Table(name = "BOOKED_MEETING")
 public class BookedMeeting {
-
   @Id
-  @Column(name = "ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @Column(name = "TUTOR_FN")
-  private Long tutorFN;
+  @ManyToOne
+  @JoinColumn(name = "TUTOR_FN")
+  private Tutor tutor;
 
-  @Column(name = "STUDENT_FN")
-  private Long studentFN;
+  @ManyToOne
+  @JoinColumn(name = "STUDENT_FN")
+  private Student student;
 
   @Column(name = "START_TIME")
   private Time start;
@@ -39,7 +40,7 @@ public class BookedMeeting {
   private String reason;
 
   @Column(name = "STATUS")
-  private Status status;
+  private MeetingStatus status;
 
   public Time getStart() {
     return start;
@@ -73,27 +74,11 @@ public class BookedMeeting {
     this.reason = reason;
   }
 
-  public Long getTutorFN() {
-    return tutorFN;
-  }
-
-  public void setTutorFN(Long tutorFN) {
-    this.tutorFN = tutorFN;
-  }
-
-  public Long getStudentFN() {
-    return studentFN;
-  }
-
-  public void setStudentFN(Long studentFN) {
-    this.studentFN = studentFN;
-  }
-
-  public Status getStatus() {
+  public MeetingStatus getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(MeetingStatus status) {
     this.status = status;
   }
 }

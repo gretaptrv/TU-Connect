@@ -34,15 +34,15 @@ public class DatabaseUtility {
     List<Student> students = new ArrayList<>();
     List<VisitingHours> hours = new ArrayList<>();
 
-    addVisitingHours(hours);
     addTutors(tutors);
     addStudents(students);
-
 
     setLoginCredentials(tutors);
     setLoginCredentials(students);
     tutorRepository.saveAll(tutors);
     studentRepository.saveAll(students);
+
+    addVisitingHours(hours);
     visitingHoursRepository.saveAll(hours);
   }
 
@@ -52,32 +52,6 @@ public class DatabaseUtility {
       user.setPassword(user.getFkNum() + "_" + user.getFirstName());
       user.setUsername(user.getEmail());
     });
-  }
-
-  private void addVisitingHours(List<VisitingHours> hours) {
-    hours.add(new VisitingHours(191213546L, Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
-    hours.add(new VisitingHours(191213566L, Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(191212546L, Time.valueOf("13:00:00"), Time.valueOf("16:00:00")));
-    hours.add(new VisitingHours(191213576L, Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(191213446L, Time.valueOf("14:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(191213456L, Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(191213356L, Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(191213457L, Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
-    hours.add(new VisitingHours(191213476L, Time.valueOf("14:00:00"), Time.valueOf("16:00:00")));
-    hours.add(new VisitingHours(191213486L, Time.valueOf("13:00:00"), Time.valueOf("15:00:00")));
-    hours.add(new VisitingHours(191213488L, Time.valueOf("11:00:00"), Time.valueOf("13:00:00")));
-    hours.add(new VisitingHours(191213856L, Time.valueOf("09:00:00"), Time.valueOf("11:00:00")));
-    hours.add(new VisitingHours(191213886L, Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(191213156L, Time.valueOf("16:00:00"), Time.valueOf("18:00:00")));
-    hours.add(new VisitingHours(191213334L, Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
-  }
-
-  private void addStudents(List<Student> students) {
-    students.add(new Student("121219115", "Greta", "Petrova", "greta.petrova@tu-sofia.bg", 29));
-    students.add(new Student("121219012", "Valentina", "Andreeva", "valentina.andreeva@tu-sofia.bg", 30));
-    students.add(new Student("121219057", "Slavena", "Dimitrova", "slavena.dimitrova@tu-sofia.bg", 30));
-    students.add(new Student("121219071", "Jaqueline", "Basheva", "jaqueline.basheva@tu-sofia.bg", 30));
-    students.add(new Student("121219041", "Miroslav", "Mihaylov", "miroslav.mihaylov@tu-sofia.bg", 29));
   }
 
   private void addTutors(List<Tutor> tutors) {
@@ -98,6 +72,33 @@ public class DatabaseUtility {
     tutors.add(new Tutor("191213416", "Diana", "Grigorova", "02 965-3523", "dgrigorova@tu-sofia.bg", "1200", "Computer Systems"));
     tutors.add(new Tutor("191213334", "Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1205", "Cyber Security"));
   }
+
+  private void addStudents(List<Student> students) {
+    students.add(new Student("121219115", "Greta", "Petrova", "greta.petrova@tu-sofia.bg", 29));
+    students.add(new Student("121219012", "Valentina", "Andreeva", "valentina.andreeva@tu-sofia.bg", 30));
+    students.add(new Student("121219057", "Slavena", "Dimitrova", "slavena.dimitrova@tu-sofia.bg", 30));
+    students.add(new Student("121219071", "Jaqueline", "Basheva", "jaqueline.basheva@tu-sofia.bg", 30));
+    students.add(new Student("121219041", "Miroslav", "Mihaylov", "miroslav.mihaylov@tu-sofia.bg", 29));
+  }
+
+  private void addVisitingHours(List<VisitingHours> hours) {
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213546"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213566"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191212546"), Time.valueOf("13:00:00"), Time.valueOf("16:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213576"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213446"), Time.valueOf("14:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213456"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213356"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213457"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213476"), Time.valueOf("14:00:00"), Time.valueOf("16:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213486"), Time.valueOf("13:00:00"), Time.valueOf("15:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213488"), Time.valueOf("11:00:00"), Time.valueOf("13:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213856"), Time.valueOf("09:00:00"), Time.valueOf("11:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213886"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213156"), Time.valueOf("16:00:00"), Time.valueOf("18:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213334"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
+  }
+
 
 /*  HikariCP - why?
   With connection pooling, when you call connection.close(), the connection is not actually closed;

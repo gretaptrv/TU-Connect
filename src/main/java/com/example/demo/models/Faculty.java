@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 @Table(name = "FACULTY")
 public class Faculty {
   @Id
-  @Column(name = "ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FACULTY_SEQ")
   @SequenceGenerator(name = "FACULTY_SEQ", sequenceName = "FACULTY_SEQ", allocationSize = 1)
   private Long id;

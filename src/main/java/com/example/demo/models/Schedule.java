@@ -1,12 +1,6 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.sql.Time;
 
@@ -14,7 +8,6 @@ import java.sql.Time;
 @Table(name = "SCHEDULE")
 public class Schedule {
   @Id
-  @Column(name = "ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SCHEDULE_SEQ")
   @SequenceGenerator(name = "SCHEDULE_SEQ", sequenceName = "SCHEDULE_SEQ", allocationSize = 1)
   private Long id;
@@ -31,8 +24,9 @@ public class Schedule {
   @Column(name = "ROOM_NUM")
   private int roomNum;
 
-  @Column(name = "TUTOR_FN")
-  private String tutorFN;
+  @ManyToOne
+  @JoinColumn(name = "TUTOR_FN")
+  private Tutor tutor;
 
   //TODO: добави курс на студентите
 
