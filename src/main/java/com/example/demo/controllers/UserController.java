@@ -3,15 +3,10 @@ package com.example.demo.controllers;
 import com.example.demo.models.User;
 import com.example.demo.services.UserService;
 import com.example.demo.utils.AuthRequest;
-import com.example.demo.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,14 +19,10 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
     }
 
     @GetMapping("hello")
@@ -46,11 +37,7 @@ public class UserController {
 
     @PostMapping
     public String authenticate(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtUtils.generateToken(authRequest.getUsername());
-        }
-        throw new UsernameNotFoundException("Invalid username or password!");
+        return userService.authenticate(authRequest);
     }
 
     @GetMapping

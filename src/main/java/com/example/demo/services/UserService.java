@@ -6,7 +6,11 @@ import com.example.demo.models.Student;
 import com.example.demo.models.Tutor;
 import com.example.demo.models.User;
 import com.example.demo.utils.AuthRequest;
+import com.example.demo.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +25,9 @@ import java.util.stream.Stream;
 @Service
 public class UserService implements UserDetailsService {
 
+  private final AuthenticationManager authenticationManager;
+  private final JwtUtils jwtUtils;
+
   @Autowired
   private TutorService tutors;
 
@@ -32,6 +39,12 @@ public class UserService implements UserDetailsService {
 
   @Autowired
   PasswordEncoder passwordEncoder;
+
+  @Autowired
+  public UserService(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    this.authenticationManager = authenticationManager;
+    this.jwtUtils = jwtUtils;
+  }
 
   public List<User> list() {
     Stream<User> allUsersStream = Stream.concat(
@@ -95,5 +108,13 @@ public class UserService implements UserDetailsService {
                       .build()
       );
     }
+  }
+
+  public String authenticate(AuthRequest authRequest) {
+    Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+    if (authentication.isAuthenticated()) {
+      return jwtUtils.generateToken(authRequest.getUsername());
+    }
+    throw new UsernameNotFoundException("Invalid username or password!");
   }
 }

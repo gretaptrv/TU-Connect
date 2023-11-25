@@ -1,20 +1,11 @@
 package com.example.demo.models;
 
+import lombok.Data;
+
+@Data
 public class EmailRequest {
 
-  private String recipientEmail;
-  private String subject;
-  private String message;
-
-  public String getRecipientEmail() {
-    return this.recipientEmail;
-  }
-
-  public String getSubject() {
-    return this.subject;
-  }
-
-  public String getMessage() {
-    return this.message;
-  }
+  private final String recipientEmail;
+  private final String subject;
+  private final String message;
 }

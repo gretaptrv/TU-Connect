@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.models.EmailRequest;
 import com.example.demo.services.EmailService;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -22,9 +23,10 @@ public class Demo1Application {
 
   @PostConstruct
   public void sendEmailOnStartup() {
+    EmailRequest request = new EmailRequest("gweaverace@gmail.com", "diplomna rabota",
+                                            "mnogo qk mail");
     emailService
-        .sendEmail("gweaverace@gmail.com", "diplomna rabota",
-                   "mnogo qk mail");
+        .sendEmail(request);
   }
 
 }
