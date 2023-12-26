@@ -1,12 +1,12 @@
 package com.example.demo.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +14,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -27,9 +29,8 @@ public class VisitingHours {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @ManyToOne
-  @JoinColumn(name = "TUTOR_ID")
-  private Tutor tutor;
+  @OneToMany(mappedBy = "visitingHours", cascade = CascadeType.ALL)
+  private List<Tutor> tutors;
 
   @NonNull
   @Column(name = "START_TIME")
@@ -43,7 +44,8 @@ public class VisitingHours {
     if (tutor.isEmpty() || end.before(start)) {
       throw new IllegalArgumentException("Error when creating VisitingHours!");
     }
-    this.tutor = tutor.get();
+    setTutors(new ArrayList<>());
+    tutors.add(tutor.get());
     this.start = start;
     this.end = end;
   }

@@ -1,7 +1,7 @@
 package com.example.demo.enums.status;
 
 public enum ThesisStatus {
-  DRAFT,
+  SUBMITTED,
   PENDING,
   ACCEPTED
 }

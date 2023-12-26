@@ -1,30 +1,25 @@
 package com.example.demo.models;
 
 import com.example.demo.enums.status.ThesisStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @Table(name = "THESIS")
 public class Thesis {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "THESIS_SEQ")
-  @SequenceGenerator(name = "THESIS_SEQ", sequenceName = "THESIS_SEQ", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @ManyToOne
@@ -45,8 +40,13 @@ public class Thesis {
   @Column(name = "EMAIL", nullable = false)
   private String email;
 
+  @Setter(AccessLevel.PRIVATE)
   @Column(name = "STATUS")
-  private ThesisStatus status = ThesisStatus.DRAFT;
+  private ThesisStatus status = ThesisStatus.SUBMITTED;
+
+  @Setter(AccessLevel.NONE)
+  @OneToMany(mappedBy = "thesis", cascade = CascadeType.ALL)
+  private List<ThesisOffer> thesisOffers = new ArrayList<>();
 
   public void pendingStatus() {
     this.status = ThesisStatus.PENDING;
@@ -67,6 +67,10 @@ public class Thesis {
   @Override
   public int hashCode() {
     return getClass().hashCode();
+  }
+
+  public void addOffer(ThesisOffer offer) {
+    this.thesisOffers.add(offer);
   }
 }
 
