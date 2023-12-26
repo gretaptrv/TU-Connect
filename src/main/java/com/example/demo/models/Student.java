@@ -4,6 +4,7 @@ import com.example.demo.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,10 +27,14 @@ public class Student extends User {
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
   private List<Thesis> theses;
 
-  public Student(String fkNum, String firstName, String lastName, String email, int groupNum) {
-    super(fkNum, firstName, lastName, email);
-    this.groupNum = groupNum;
+  @Id
+  @Column(name = "FK_NUM", length = 9, unique = true)
+  private String fkNum;
 
+  public Student(String fkNum, String firstName, String lastName, String email, int groupNum) {
+    super(firstName, lastName, email);
+    this.fkNum = fkNum;
+    this.groupNum = groupNum;
   }
 
   @Override

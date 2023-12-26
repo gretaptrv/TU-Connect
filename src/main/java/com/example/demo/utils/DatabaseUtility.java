@@ -33,7 +33,7 @@ public class DatabaseUtility {
     List<Tutor> tutors = new ArrayList<>();
     List<Student> students = new ArrayList<>();
     List<VisitingHours> hours = new ArrayList<>();
-
+/*
     addTutors(tutors);
     addStudents(students);
 
@@ -43,34 +43,35 @@ public class DatabaseUtility {
     studentRepository.saveAll(students);
 
     addVisitingHours(hours);
-    visitingHoursRepository.saveAll(hours);
+    visitingHoursRepository.saveAll(hours);*/
   }
 
 
   private void setLoginCredentials(List<? extends User> users) {
     users.forEach(user -> {
-      user.setPassword(user.getFkNum() + "_" + user.getFirstName());
+      user.setPassword(user.getLastName() + "_" + user.getFirstName());
       user.setUsername(user.getEmail());
+      //TODO: hash the password
     });
   }
 
   private void addTutors(List<Tutor> tutors) {
-    tutors.add(new Tutor("191213546", "Iva", "Nikolova", "02 965-2680", "inni@tu-sofia.bg", "1311"));
-    tutors.add(new Tutor("191213566", "Milena", "Lazarova", "02 965-2524", "milaz@tu-sofia.bg", "1201"));
-    tutors.add(new Tutor("191212546", "Boris", "Tudzharov", "02 965-3385", "bntv@tu-sofia.bg", "1203"));
-    tutors.add(new Tutor("191213576", "Daniela", "Gotseva", "02 965-2338", "dgoceva@tu-sofia.bg", "1204"));
-    tutors.add(new Tutor("191213446", "Ognyan", "Nakov", "02 965-2513", "nakov@tu-sofia.bg", "1443"));
-    tutors.add(new Tutor("191213456", "Adelina", "Aleksieva", "02 965-2652", "aaleksieva@tu-sofia.bg", "3311A"));
-    tutors.add(new Tutor("191213356", "Antonia", "Tasheva", "02 965-3471", "atasheva@tu-sofia.bg", "3417А"));
-    tutors.add(new Tutor("191213457", "Valentin", "Mollov", "02 965-3523", "mollov@tu-sofia.bg", "1200"));
-    tutors.add(new Tutor("191213476", "Valentin", "Hristov", "02 965-3054", "v_hristov@tu-sofia.bg", "1323A"));
-    tutors.add(new Tutor("191213486", "Georgi", "Zapryanov", "02 965-2680", "gszap@tu-sofia.bg", "1311"));
-    tutors.add(new Tutor("191213488", "Petar", "Marinov", "02 965-2224", "pmarinov@tu-sofia.bg", "1205"));
-    tutors.add(new Tutor("191213856", "Neven", "Nikolov", "", "n.nikolov@tu-sofia.bg", "1406"));
-    tutors.add(new Tutor("191213886", "Rumen", "Trifonov", "", "r_trifonov@tu-sofia.bg", "1326"));
-    tutors.add(new Tutor("191213156", "Galya", "Pavlova", "02 965-3523", "raicheva@tu-sofia.bg", "1200"));
-    tutors.add(new Tutor("191213416", "Diana", "Grigorova", "02 965-3523", "dgrigorova@tu-sofia.bg", "1200"));
-    tutors.add(new Tutor("191213334", "Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("Iva", "Nikolova", "02 965-2680", "inni@tu-sofia.bg", "1311"));
+    tutors.add(new Tutor("Milena", "Lazarova", "02 965-2524", "milaz@tu-sofia.bg", "1201"));
+    tutors.add(new Tutor("Boris", "Tudzharov", "02 965-3385", "bntv@tu-sofia.bg", "1203"));
+    tutors.add(new Tutor("Daniela", "Gotseva", "02 965-2338", "dgoceva@tu-sofia.bg", "1204"));
+    tutors.add(new Tutor("Ognyan", "Nakov", "02 965-2513", "nakov@tu-sofia.bg", "1443"));
+    tutors.add(new Tutor("Adelina", "Aleksieva", "02 965-2652", "aaleksieva@tu-sofia.bg", "3311A"));
+    tutors.add(new Tutor("Antonia", "Tasheva", "02 965-3471", "atasheva@tu-sofia.bg", "3417А"));
+    tutors.add(new Tutor("Valentin", "Mollov", "02 965-3523", "mollov@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("Valentin", "Hristov", "02 965-3054", "v_hristov@tu-sofia.bg", "1323A"));
+    tutors.add(new Tutor("Georgi", "Zapryanov", "02 965-2680", "gszap@tu-sofia.bg", "1311"));
+    tutors.add(new Tutor("Petar", "Marinov", "02 965-2224", "pmarinov@tu-sofia.bg", "1205"));
+    tutors.add(new Tutor("Neven", "Nikolov", "", "n.nikolov@tu-sofia.bg", "1406"));
+    tutors.add(new Tutor("Rumen", "Trifonov", "", "r_trifonov@tu-sofia.bg", "1326"));
+    tutors.add(new Tutor("Galya", "Pavlova", "02 965-3523", "raicheva@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("Diana", "Grigorova", "02 965-3523", "dgrigorova@tu-sofia.bg", "1200"));
+    tutors.add(new Tutor("Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1200"));
   }
 
   private void addStudents(List<Student> students) {
@@ -82,21 +83,22 @@ public class DatabaseUtility {
   }
 
   private void addVisitingHours(List<VisitingHours> hours) {
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213546"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213566"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191212546"), Time.valueOf("13:00:00"), Time.valueOf("16:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213576"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213446"), Time.valueOf("14:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213456"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213356"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213457"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213476"), Time.valueOf("14:00:00"), Time.valueOf("16:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213486"), Time.valueOf("13:00:00"), Time.valueOf("15:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213488"), Time.valueOf("11:00:00"), Time.valueOf("13:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213856"), Time.valueOf("09:00:00"), Time.valueOf("11:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213886"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213156"), Time.valueOf("16:00:00"), Time.valueOf("18:00:00")));
-    hours.add(new VisitingHours(tutorRepository.findByFkNum("191213334"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Iva", "Nikolova"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Milena", "Lazarova"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Boris", "Tudzharov"), Time.valueOf("13:00:00"), Time.valueOf("16:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Daniela", "Gotseva"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Ognyan", "Nakov"), Time.valueOf("14:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Adelina", "Aleksieva"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Antonia", "Tasheva"), Time.valueOf("09:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Valentin", "Mollov"), Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Valentin", "Hristov"), Time.valueOf("14:00:00"), Time.valueOf("16:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Georgi", "Zapryanov"), Time.valueOf("13:00:00"), Time.valueOf("15:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Petar", "Marinov"), Time.valueOf("11:00:00"), Time.valueOf("13:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Petar", "Marinov"), Time.valueOf("09:00:00"), Time.valueOf("11:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Rumen", "Trifonov"), Time.valueOf("15:00:00"), Time.valueOf("17:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Galya", "Pavlova"), Time.valueOf("16:00:00"), Time.valueOf("18:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Yavor", "Tomov"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
+    hours.add(new VisitingHours(tutorRepository.findByFirstNameAndLastName("Diana", "Grigorova"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00")));
   }
 
 

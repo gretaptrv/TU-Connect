@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface TutorRepository extends JpaRepository<Tutor, Long> {
 
-    Optional<Tutor> findByFkNum(String fk);
+    Optional<Tutor> findByFirstName(String firstName);
 
     List<Tutor> findAll();
 
@@ -22,4 +22,5 @@ public interface TutorRepository extends JpaRepository<Tutor, Long> {
     @Query("SELECT t FROM Tutor t WHERE t.username = :username")
     Optional<Tutor> findByUsername(@Param("username") String username);
 
+    Optional<Tutor> findByFirstNameAndLastName(String firstName, String lastName);
 }

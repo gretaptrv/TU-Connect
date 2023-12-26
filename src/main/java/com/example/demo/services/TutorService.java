@@ -30,8 +30,8 @@ public class TutorService {
     return tutors.findAll();
   }
 
-  public Optional<Tutor> getById(String fkNum) {
-    return tutors.findByFkNum(fkNum);
+  public Optional<Tutor> getById(Long id) {
+    return tutors.findById(id);
   }
 
   public List<Tutor> getAllByFaculty(String faculty) {
@@ -43,12 +43,12 @@ public class TutorService {
     return optionalTutor.orElse(null);
   }
 
-  public List<Schedule> getSchedules(String tutorFN) {
-    return scheduleService.getByTutor(tutors.findByFkNum(tutorFN).orElse(null));
+  public List<Schedule> getSchedules(Long id) {
+    return scheduleService.getByTutor(tutors.findById(id).orElse(null));
   }
 
-  public VisitingHours getVisitingHours(String tutorFN) {
-    return visitingHoursService.getByTutor(getById(tutorFN).orElse(null));
+  public VisitingHours getVisitingHours(Long id) {
+    return visitingHoursService.getByTutor(getById(id).orElse(null));
   }
 
   public void save(Tutor tutor) {

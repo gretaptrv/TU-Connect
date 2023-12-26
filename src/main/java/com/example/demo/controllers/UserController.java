@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.User;
+import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
 import com.example.demo.utils.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,12 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
+    private final AuthenticationService authService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @GetMapping("hello")
@@ -37,7 +40,7 @@ public class UserController {
 
     @PostMapping
     public String authenticate(@RequestBody AuthRequest authRequest) {
-        return userService.authenticate(authRequest);
+        return authService.authenticate(authRequest);
     }
 
     @GetMapping

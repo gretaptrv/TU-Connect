@@ -2,7 +2,6 @@ package com.example.demo.models;
 
 import com.example.demo.enums.UserRole;
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.MappedSuperclass;
@@ -33,10 +32,6 @@ public abstract class User implements UserDetails {
   @Column(name = "PASSWORD")
   private String password;
 
-  @Id
-  @Column(name = "FK_NUM", length = 9, unique = true)
-  private String fkNum;
-
   @Column(name = "FIRST_NAME")
   private String firstName;
 
@@ -46,8 +41,7 @@ public abstract class User implements UserDetails {
   @Column(name = "EMAIL", unique = true)
   private String email;
 
-  public User(String fakNum, String firstName, String lastName, String email) {
-    this.fkNum = fakNum;
+  public User(String firstName, String lastName, String email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

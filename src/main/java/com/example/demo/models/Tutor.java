@@ -4,6 +4,9 @@ import com.example.demo.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,6 +23,10 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class Tutor extends User {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
   @Column(name = "PHONE_NUM", length = 11)
   private String phoneNum;
@@ -37,14 +44,19 @@ public class Tutor extends User {
   @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
   private List<Thesis> theses;
 
-  @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
-  private List<VisitingHours> visitingHours;
+  @ManyToOne
+  @JoinColumn(name = "VISITING_HOURS_ID")
+  private VisitingHours visitingHours;
 
   @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
   private List<Schedule> schedule;
 
-  public Tutor(String fakNum, String firstName, String lastName, String phoneNum, String email, String roomNum) {
-    super(fakNum, firstName, lastName, email);
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Tutor(String firstName, String lastName, String phoneNum, String email, String roomNum) {
+    super(firstName, lastName, email);
     this.phoneNum = phoneNum;
     this.roomNum = roomNum;
   }
