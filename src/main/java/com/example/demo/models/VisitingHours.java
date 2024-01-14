@@ -1,36 +1,25 @@
 package com.example.demo.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Entity
-@Table(name = "VISITING_HOURS")
-@RequiredArgsConstructor
+@Table(name = "VISITING_HOURS", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"START_TIME", "END_TIME"})
+})
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class VisitingHours {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
-
-  @OneToMany(mappedBy = "visitingHours", cascade = CascadeType.ALL)
-  private List<Tutor> tutors;
 
   @NonNull
   @Column(name = "START_TIME")
@@ -40,14 +29,17 @@ public class VisitingHours {
   @Column(name = "END_TIME")
   private Time end;
 
-  public VisitingHours(Optional<Tutor> tutor, Time start, Time end) {
-    if (tutor.isEmpty() || end.before(start)) {
-      throw new IllegalArgumentException("Error when creating VisitingHours!");
-    }
-    setTutors(new ArrayList<>());
-    tutors.add(tutor.get());
-    this.start = start;
-    this.end = end;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    VisitingHours that = (VisitingHours) o;
+    return id != null && Objects.equals(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
 

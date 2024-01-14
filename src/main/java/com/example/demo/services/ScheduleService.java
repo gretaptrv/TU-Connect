@@ -13,6 +13,6 @@ public class ScheduleService {
   ScheduleRepository schedules;
 
   public List<Schedule> getByTutor(Tutor tutor) {
-    return schedules.findByTutor(tutor);
+    return schedules.findByTutorsContaining(tutor);
   }
 }

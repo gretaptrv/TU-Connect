@@ -3,6 +3,7 @@ package com.example.demo.models;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.util.List;
 
 @Entity 
 @Table(name = "SCHEDULE")
@@ -24,13 +25,8 @@ public class Schedule {
   @Column(name = "ROOM_NUM")
   private int roomNum;
 
-  @ManyToOne
-  @JoinColumn(name = "TUTOR_FN")
-  private Tutor tutor;
+  @OneToMany(mappedBy = "schedule")
+  private List<Tutor> tutors;
 
-  //TODO: добави курс на студентите
-
-  @Column(name = "GROUP_NUM")
-  private int groupNum;
 }
 

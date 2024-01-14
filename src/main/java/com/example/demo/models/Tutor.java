@@ -1,25 +1,19 @@
 package com.example.demo.models;
 
 import com.example.demo.enums.UserRole;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Time;
 import java.util.List;
 
 @Entity
 @Table(name = "TUTOR")
 @Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 public class Tutor extends User {
@@ -48,8 +42,9 @@ public class Tutor extends User {
   @JoinColumn(name = "VISITING_HOURS_ID")
   private VisitingHours visitingHours;
 
-  @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
-  private List<Schedule> schedule;
+  @ManyToOne
+  @JoinColumn(name = "SCHEDULE_ID")
+  private Schedule schedule;
 
   public void setId(Long id) {
     this.id = id;
@@ -84,6 +79,15 @@ public class Tutor extends User {
   @Override
   public boolean isEnabled() {
     return false;
+  }
+
+  public void setVisitingHours(VisitingHours visitingHours) {
+    Time start = visitingHours.getStart();
+    Time end = visitingHours.getEnd();
+    if (end.before(start)) {
+      throw new IllegalArgumentException("End time must be after start time.");
+    }
+    this.visitingHours = visitingHours;
   }
 
   //TODO: add a picture url and a default picture

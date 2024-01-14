@@ -8,6 +8,7 @@ import com.example.demo.repos.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +48,17 @@ public class TutorService {
     return scheduleService.getByTutor(tutors.findById(id).orElse(null));
   }
 
-  public VisitingHours getVisitingHours(Long id) {
-    return visitingHoursService.getByTutor(getById(id).orElse(null));
+  public Tutor assignVisitingHours(Tutor tutor, Time start, Time end) {
+    VisitingHours visitingHours = visitingHoursService.findByStartAndEndTime(start, end)
+                                                         .orElseGet(() -> {
+                                                           VisitingHours newVisitingHours = new VisitingHours();
+                                                           newVisitingHours.setStart(start);
+                                                           newVisitingHours.setEnd(end);
+                                                           return visitingHoursService.save(newVisitingHours);
+                                                         });
+
+    tutor.setVisitingHours(visitingHours);
+    return tutors.save(tutor);
   }
 
   public void save(Tutor tutor) {

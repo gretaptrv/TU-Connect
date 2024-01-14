@@ -18,8 +18,8 @@ public class StudentService {
     return students.findAll();
   }
 
-  public Optional<Student> getById(String fkNum) {
-    return students.findByFkNum(fkNum);
+  public Optional<Student> getById(Long id) {
+    return students.findById(id);
   }
 
   public Student getByUsername(String username) {

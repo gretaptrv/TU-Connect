@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    List<Schedule> findByTutor(Tutor tutor);
+    List<Schedule> findByTutorsContaining(Tutor tutor);
 
     List<Schedule> findAll();
 }

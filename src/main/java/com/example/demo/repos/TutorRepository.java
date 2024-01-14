@@ -13,8 +13,6 @@ import java.util.Optional;
 @Repository
 public interface TutorRepository extends JpaRepository<Tutor, Long> {
 
-    Optional<Tutor> findByFirstName(String firstName);
-
     List<Tutor> findAll();
 
     List<Tutor> findAllByFaculty(Faculty faculty);
