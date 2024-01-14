@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.enums.email.Subject;
+import com.example.demo.models.EmailRequest;
 import com.example.demo.models.Thesis;
 import com.example.demo.models.ThesisOffer;
 import com.example.demo.services.EmailService;
@@ -33,22 +35,20 @@ public class ThesisController {
         return thesisService.addOffer(thesisOffer);
     }
 
-    @PostMapping("/accept")
-    public ResponseEntity<String> acceptRequest(@RequestParam Long thesisId) {
-        // Logic for sending email to the tutor, deleting requests, and changing status
-        // You might want to create a separate service for email sending and handle the logic there
+    @PostMapping("/accept/{thesisOfferId}")
+    public ResponseEntity<String> acceptRequest(@RequestBody String emailContent, @PathVariable Long thesisOfferId) {
 
-        // For simplicity, let's assume you have methods in the Thesis entity to handle these actions
-        Thesis thesis = null;
-        if (thesis != null) {
-            // Send email to the tutor
-            // thesis.sendEmailToTutor();
+        ThesisOffer offer = thesisService.getOffer(thesisOfferId);
+        if (offer != null) {
 
+            Thesis thesis = offer.getThesis();
             thesis.acceptedStatus();
-            //delete remaining requests
+            EmailRequest request = new EmailRequest
+                (offer.getTutorEmail(), Subject.OFFER_ACCEPTED.getMessage(), emailContent);
+            emailService.sendEmail(request);
 
-            // Save the updated thesis
             thesisService.save(thesis);
+            thesisService.save(offer);
 
             return new ResponseEntity<>("Thesis request accepted successfully", HttpStatus.OK);
         } else {

@@ -6,6 +6,7 @@ import com.example.demo.models.Thesis;
 import com.example.demo.models.ThesisOffer;
 import com.example.demo.repos.ThesisOfferRepository;
 import com.example.demo.repos.ThesisRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,4 +53,21 @@ public class ThesisService {
       return new ResponseEntity<>("Thesis not found", HttpStatus.NOT_FOUND);
     }
   }
+
+  public Thesis getThesis(Long id) {
+    try {
+      return thesisRepository.getReferenceById(id);
+    } catch (EntityNotFoundException e) {
+      return null;
+    }
+  }
+
+  public ThesisOffer getOffer(Long id) {
+    try {
+      return offerRepository.getReferenceById(id);
+    } catch (EntityNotFoundException e) {
+      return null;
+    }
+  }
+
 }

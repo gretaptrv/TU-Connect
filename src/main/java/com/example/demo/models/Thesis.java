@@ -54,6 +54,7 @@ public class Thesis {
 
   public void acceptedStatus() {
     this.status = ThesisStatus.ACCEPTED;
+    deleteOffers();
   }
 
   @Override
@@ -71,6 +72,10 @@ public class Thesis {
 
   public void addOffer(ThesisOffer offer) {
     this.thesisOffers.add(offer);
+  }
+
+  private void deleteOffers() {
+    this.thesisOffers.clear();
   }
 }
 
