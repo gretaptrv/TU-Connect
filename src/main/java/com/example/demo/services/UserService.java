@@ -69,20 +69,20 @@ public class UserService implements UserDetailsService {
   }
 
   public void addUser(AuthRequest authRequest) {
-    if (authRequest.getRole() == UserRole.STUDENTE) {
-      students.save(Student
-                        .builder()
-                        .fkNum("1235_789")
-                        .username(authRequest.getUsername())
-                        .password(passwordEncoder.encode(authRequest.getPassword()))
-                        .build()
-      );
-    } else {
+    if(authRequest.getRole() == UserRole.TUTORE) {
       tutors.save(Tutor
                       .builder()
                       .username(authRequest.getUsername())
                       .password(passwordEncoder.encode(authRequest.getPassword()))
                       .build()
+      );
+    } else {
+      students.save(Student
+                        .builder()
+                        .fkNum(authRequest.getPassword())
+                        .username(authRequest.getUsername())
+                        .password(passwordEncoder.encode(authRequest.getPassword()))
+                        .build()
       );
     }
   }

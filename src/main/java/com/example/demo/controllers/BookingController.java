@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/api/booking")
 public class BookingController {
 
   @Autowired
@@ -46,19 +46,19 @@ public class BookingController {
     return ResponseEntity.ok(bookedMeeting);
   }
 
-  @PostMapping("/accept/{meetingId}")
+  @PostMapping("/accept/meeting/{meetingId}")
   public ResponseEntity<BookedMeeting> acceptMeeting(@PathVariable Long meetingId) {
     BookedMeeting meeting = bookingService.acceptMeeting(meetingId);
     return ResponseEntity.ok(meeting);
   }
 
-  @PostMapping("/acceptWithChanges/{meetingId}")
+  @PostMapping("/acceptWithChanges/meeting/{meetingId}")
   public ResponseEntity<BookedMeeting> acceptMeetingWithChanges(@PathVariable Long meetingId, @RequestBody BookedMeeting updatedMeeting) {
     BookedMeeting meeting = bookingService.acceptMeetingWithChanges(meetingId, updatedMeeting);
     return ResponseEntity.ok(meeting);
   }
 
-  @PostMapping("/decline/{meetingId}")
+  @PostMapping("/decline/meeting/{meetingId}")
   public ResponseEntity<Void> declineMeeting(@PathVariable Long meetingId) {
     bookingService.declineMeeting(meetingId);
     return ResponseEntity.ok().build();

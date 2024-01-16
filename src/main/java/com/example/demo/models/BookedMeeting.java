@@ -22,11 +22,11 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity 
+@Entity
 @Table(name = "BOOKED_MEETING")
 public class BookedMeeting {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @ManyToOne

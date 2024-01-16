@@ -9,8 +9,7 @@ import java.util.List;
 @Table(name = "SCHEDULE")
 public class Schedule {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SCHEDULE_SEQ")
-  @SequenceGenerator(name = "SCHEDULE_SEQ", sequenceName = "SCHEDULE_SEQ", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @Column(name = "DAY")
@@ -27,6 +26,7 @@ public class Schedule {
 
   @OneToMany(mappedBy = "schedule")
   private List<Tutor> tutors;
+  //TODO: impossible, change to one tutor
 
 }
 

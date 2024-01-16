@@ -35,7 +35,7 @@ public class ThesisController {
         return thesisService.addOffer(thesisOffer);
     }
 
-    @PostMapping("/accept/{thesisOfferId}")
+    @PostMapping("/accept/offer/{thesisOfferId}")
     public ResponseEntity<String> acceptRequest(@RequestBody String emailContent, @PathVariable Long thesisOfferId) {
 
         ThesisOffer offer = thesisService.getOffer(thesisOfferId);
