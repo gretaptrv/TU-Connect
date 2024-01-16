@@ -1,4 +1,4 @@
-package com.example.demo.auth;
+package com.example.demo.models;
 
 import org.springframework.security.core.userdetails.User;
 

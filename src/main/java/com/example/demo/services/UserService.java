@@ -1,11 +1,11 @@
 package com.example.demo.services;
 
-import com.example.demo.auth.UserData;
+import com.example.demo.models.UserData;
 import com.example.demo.enums.UserRole;
 import com.example.demo.models.Student;
 import com.example.demo.models.Tutor;
 import com.example.demo.models.User;
-import com.example.demo.utils.AuthRequest;
+import com.example.demo.models.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
