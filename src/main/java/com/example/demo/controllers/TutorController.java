@@ -6,7 +6,11 @@ import com.example.demo.services.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +37,7 @@ public class TutorController {
 	}
 
 	@GetMapping("/tutor/{id}")
+	@Secured({})
 	public ResponseEntity<TutorDTO> getTutorById(@PathVariable Long id) {
 		Tutor tutor = tutorService.getById(id).orElse(new Tutor());
 		TutorDTO dto = TutorDTO.convert(tutor);

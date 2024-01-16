@@ -40,11 +40,9 @@ public class ThesisService {
       thesis.pendingStatus();
       thesis.addOffer(thesisOffer);
 
-      /* TODO: Which one should be saved first? */
       save(thesisOffer);
       save(thesis);
 
-      /* TODO */
       EmailRequest request = new EmailRequest(thesisOffer.getThesis().getStudent().getEmail(), Subject.THESIS_OFFER.getMessage(), thesisOffer.getNote());
       this.emailService.sendEmail(request);
 

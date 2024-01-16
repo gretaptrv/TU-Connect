@@ -72,7 +72,9 @@ public class UserService implements UserDetailsService {
 
   public void addUser(AuthRequest authRequest) {
     if (usernameIsTaken(authRequest.getUsername())) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username like this exists! Think of a new one.");
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST,
+          "Username like this exists! Think of a new one.");
     }
     if(authRequest.getRole() == UserRole.TUTORE) {
       tutors.save(Tutor
