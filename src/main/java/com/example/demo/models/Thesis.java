@@ -77,5 +77,9 @@ public class Thesis {
   private void deleteOffers() {
     this.thesisOffers.clear();
   }
+
+  public void deleteOffer(ThesisOffer offer) {
+    this.thesisOffers.remove(offer);
+  }
 }
 

@@ -7,12 +7,14 @@ import com.example.demo.models.Tutor;
 import com.example.demo.models.User;
 import com.example.demo.utils.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,9 +56,9 @@ public class UserService implements UserDetailsService {
     return null;
   }
 
-  public boolean checkUsername(String username) {
-    User user = tutors.getByUsername(username);
-    return user == null && (user = studentService.getByUsername(username)) == null;
+  public boolean usernameIsTaken(String username) {
+    return tutors.getByUsername(username) != null ||
+        studentService.getByUsername(username) != null;
   }
 
   @Override
@@ -69,6 +71,9 @@ public class UserService implements UserDetailsService {
   }
 
   public void addUser(AuthRequest authRequest) {
+    if (usernameIsTaken(authRequest.getUsername())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username like this exists! Think of a new one.");
+    }
     if(authRequest.getRole() == UserRole.TUTORE) {
       tutors.save(Tutor
                       .builder()

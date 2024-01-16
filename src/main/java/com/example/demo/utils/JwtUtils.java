@@ -18,8 +18,8 @@ import java.util.function.Function;
 public class JwtUtils {
     private static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    //30 minutes
-    private static final int TOKEN_EXPIRATION_TIME_MS = 60000 * 30;
+    //5 hours
+    private static final int TOKEN_EXPIRATION_TIME_MS = 60000 * 60 * 5;
 
     public String generateToken(String userName) {
         return createToken(new HashMap<>(), userName);

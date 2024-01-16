@@ -55,4 +55,21 @@ public class ThesisController {
             return new ResponseEntity<>("Thesis not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/decline/offer/{thesisOfferId}")
+    public ResponseEntity<String> declineRequest(@PathVariable Long thesisOfferId) {
+
+        ThesisOffer offer = thesisService.getOffer(thesisOfferId);
+        if (offer != null) {
+
+            Thesis thesis = offer.getThesis();
+            thesis.deleteOffer(offer);
+
+            thesisService.save(thesis);
+
+            return new ResponseEntity<>("Thesis request deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Thesis not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
