@@ -42,7 +42,9 @@ public class AuthenticationService implements UserDetailsService {
   }
 
   public String authenticate(AuthRequest authRequest) {
-    Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+    Authentication authentication = authenticationManager
+        .authenticate(new UsernamePasswordAuthenticationToken(
+            authRequest.getUsername(), authRequest.getPassword()));
     if (authentication.isAuthenticated()) {
       return jwtUtils.generateToken(authRequest.getUsername());
     }
