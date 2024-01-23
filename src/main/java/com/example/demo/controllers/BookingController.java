@@ -7,14 +7,10 @@ import com.example.demo.services.BookingService;
 import com.example.demo.services.StudentService;
 import com.example.demo.services.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,7 +30,7 @@ public class BookingController {
   @GetMapping("/student/{studentId}")
   @Secured({"STUDENTE"})
   public ResponseEntity<List<BookedMeeting>> getMeetingsForStudent(@PathVariable Long studentId) {
-    Student student = studentService.getById(studentId).orElse(null);
+    Student student = studentService.getById(studentId).orElseThrow(() -> new DataRetrievalFailureException("Could not find information about student."));
     List<BookedMeeting> meetings = bookingService.getAllMeetingsForStudent(student);
     return ResponseEntity.ok(meetings);
   }
@@ -42,7 +38,7 @@ public class BookingController {
   @GetMapping("/tutor/{tutorId}")
   @Secured({"TUTORE"})
   public ResponseEntity<List<BookedMeeting>> getMeetingsForTutor(@PathVariable Long tutorId) {
-    Tutor tutor = tutorService.getById(tutorId).orElse(null);
+    Tutor tutor = tutorService.getById(tutorId).orElseThrow(() -> new DataRetrievalFailureException("Could not find information about tutor."));
     List<BookedMeeting> meetings = bookingService.getAllMeetingsForTutor(tutor);
     return ResponseEntity.ok(meetings);
   }

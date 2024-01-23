@@ -1,11 +1,18 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.AuthRequest;
 import com.example.demo.models.User;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
-import com.example.demo.models.AuthRequest;
+import io.jsonwebtoken.ClaimJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.io.DecodingException;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +62,10 @@ public class UserController {
     @Secured({"TUTORE"})
     public String tutor(@AuthenticationPrincipal UserDetails userDetails) {
         return "Hello tutor " + userDetails.getUsername();
+    }
+
+    @ExceptionHandler({SignatureException.class, ClaimJwtException.class, JwtException.class, DecodingException.class, AuthenticationException.class})
+    public ResponseEntity<String> handle(Exception e) {
+        return new ResponseEntity<>("An authorization error occurred, check your request and try again.", HttpStatus.UNAUTHORIZED);
     }
 }
