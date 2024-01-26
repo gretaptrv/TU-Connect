@@ -1,10 +1,12 @@
 package com.example.demo.config;
 
+import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -51,11 +53,15 @@ public class JwtUtils {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                       .setSigningKey(getSignKey())
+                       .build()
+                       .parseClaimsJws(token)
+                       .getBody();
+        } catch (ClaimJwtException claimJwtException) {
+            throw new BadCredentialsException("An authorization error occurred, check your request and try again.");
+        }
     }
 
     private Boolean isTokenExpired(String token) {

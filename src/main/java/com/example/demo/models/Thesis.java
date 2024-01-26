@@ -2,10 +2,7 @@ package com.example.demo.models;
 
 import com.example.demo.enums.status.ThesisStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.ArrayList;
@@ -15,7 +12,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "THESIS")
 public class Thesis {
   @Id

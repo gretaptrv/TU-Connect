@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.enums.email.Subject;
 import com.example.demo.models.EmailRequest;
 import com.example.demo.models.Thesis;
+import com.example.demo.models.ThesisDto;
 import com.example.demo.models.ThesisOffer;
 import com.example.demo.services.EmailService;
 import com.example.demo.services.ThesisService;
@@ -10,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/thesis")
@@ -32,9 +30,15 @@ public class ThesisController {
 
     @PostMapping("/submit")
     @Secured({"STUDENTE"})
-    public ResponseEntity<String> submitThesis(@RequestBody Thesis thesis) {
+    public ResponseEntity<String> submitThesis(@RequestBody ThesisDto thesis) {
         thesisService.save(thesis);
         return new ResponseEntity<>("Thesis submitted successfully", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/all")
+    public ResponseEntity<List<ThesisDto>> getAll() {
+        List<ThesisDto> all = thesisService.getALL();
+        return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
     @PostMapping("/offer")

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,14 +26,14 @@ public class Student extends User {
   private int groupNum;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-  private List<Thesis> theses;
+  private List<Thesis> theses = new ArrayList<>();
 
   @Id
   @Column(name = "FK_NUM", length = 9, unique = true)
   private String fkNum;
 
-  public Student(String fkNum, String firstName, String lastName, String email, int groupNum) {
-    super(firstName, lastName, email);
+  public Student(String username, String password, String fkNum, String firstName, String lastName, String email, int groupNum) {
+    super(username, password, firstName, lastName, email);
     this.fkNum = fkNum;
     this.groupNum = groupNum;
   }

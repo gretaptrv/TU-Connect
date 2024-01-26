@@ -12,6 +12,7 @@ import java.util.Objects;
     @UniqueConstraint(columnNames = {"START_TIME", "END_TIME"})
 })
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString

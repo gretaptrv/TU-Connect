@@ -1,15 +1,15 @@
 package com.example.demo.utils;
 
-import com.example.demo.models.Student;
-import com.example.demo.models.Tutor;
-import com.example.demo.models.User;
-import com.example.demo.models.VisitingHours;
+import com.example.demo.models.*;
+import com.example.demo.repos.FacultyRepository;
 import com.example.demo.repos.StudentRepository;
 import com.example.demo.repos.TutorRepository;
 import com.example.demo.repos.VisitingHoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +18,16 @@ public class DatabaseUtility {
   private final TutorRepository tutorRepository;
   private final StudentRepository studentRepository;
   private final VisitingHoursRepository visitingHoursRepository;
+  private final FacultyRepository facultyRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public DatabaseUtility(TutorRepository tutorRepository, StudentRepository studentRepository, VisitingHoursRepository visitingHoursRepository) {
+  public DatabaseUtility(TutorRepository tutorRepository, StudentRepository studentRepository, VisitingHoursRepository visitingHoursRepository, FacultyRepository facultyRepository, PasswordEncoder passwordEncoder) {
     this.tutorRepository = tutorRepository;
     this.studentRepository = studentRepository;
     this.visitingHoursRepository = visitingHoursRepository;
+    this.facultyRepository = facultyRepository;
+    this.passwordEncoder = passwordEncoder;
     this.initDatabase();
   }
 
@@ -32,16 +36,16 @@ public class DatabaseUtility {
     List<Tutor> tutors = new ArrayList<>();
     List<Student> students = new ArrayList<>();
     List<VisitingHours> hours = new ArrayList<>();
-/*    addTutors(tutors);
+//    addTutors(tutors);
     addStudents(students);
 
-    setLoginCredentials(tutors);
-    setLoginCredentials(students);
-    tutorRepository.saveAll(tutors);
-    studentRepository.saveAll(students);
+//    setLoginCredentials(tutors);
+//    setLoginCredentials(students);
+//    tutorRepository.saveAll(tutors);
+//    studentRepository.saveAll(students);
 
-    addVisitingHours(hours);
-    visitingHoursRepository.saveAll(hours);*/
+//    addVisitingHours(hours);
+//    visitingHoursRepository.saveAll(hours);
   }
 
 
@@ -90,13 +94,33 @@ public class DatabaseUtility {
     tutors.add(new Tutor("Yavor", "Tomov", "02 965-2224", "yavor_tomov@tu-sofia.bg", "1200", visitingHoursRepository.findByStartAndEndTime(Time.valueOf("10:00:00"), Time.valueOf("12:00:00")).orElse(null)));
   }*/
 
-/*  private void addStudents(List<Student> students) {
-    students.add(new Student("121219115", "Greta", "Petrova", "greta.petrova@tu-sofia.bg", 29));
-    students.add(new Student("121219012", "Valentina", "Andreeva", "valentina.andreeva@tu-sofia.bg", 30));
-    students.add(new Student("121219057", "Slavena", "Dimitrova", "slavena.dimitrova@tu-sofia.bg", 30));
-    students.add(new Student("121219071", "Jaqueline", "Basheva", "jaqueline.basheva@tu-sofia.bg", 30));
-    students.add(new Student("121219041", "Miroslav", "Mihaylov", "miroslav.mihaylov@tu-sofia.bg", 29));
-  }*/
+ private void addStudents(List<Student> students) {
+   studentRepository.save(Student
+                     .builder()
+                     .fkNum("121219115")
+                     .username("greta")
+                     .password(passwordEncoder.encode("121219115"))
+                              .firstName("Greta")
+                              .lastName("Petrova")
+                              .email("greta.petrova@tu-sofia.bg")
+                     .build());
+
+   Faculty faculty = facultyRepository.save(new Faculty(1L, "KSI"));
+   VisitingHours visitingHours = visitingHoursRepository.save(new VisitingHours(1, Time.valueOf("12:00:00"), Time.valueOf("14:00:00")));
+   tutorRepository.save(Tutor
+                   .builder()
+                   .username("tomov")
+                   .password(passwordEncoder.encode("2024"))
+                            .firstName("Qvor")
+                            .lastName("Tomov")
+                            .email("tomov@test.bg")
+                            .faculty(faculty)
+                            .roomNum("10101")
+                            .phoneNum("0887994635")
+                            .visitingHours(visitingHours)
+                   .build()
+   );
+  }
 
 /*  HikariCP - why?
   With connection pooling, when you call connection.close(), the connection is not actually closed;

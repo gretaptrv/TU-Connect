@@ -1,16 +1,22 @@
 package com.example.demo.services;
 
 import com.example.demo.enums.email.Subject;
-import com.example.demo.models.EmailRequest;
-import com.example.demo.models.Thesis;
-import com.example.demo.models.ThesisOffer;
+import com.example.demo.enums.status.ThesisStatus;
+import com.example.demo.models.*;
+import com.example.demo.repos.StudentRepository;
 import com.example.demo.repos.ThesisOfferRepository;
 import com.example.demo.repos.ThesisRepository;
+import com.example.demo.repos.TutorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ThesisService {
@@ -18,16 +24,27 @@ public class ThesisService {
   private final ThesisRepository thesisRepository;
   private final ThesisOfferRepository offerRepository;
   private final EmailService emailService;
+  private final StudentRepository studentRepository;
+  private final TutorRepository tutorRepository;
 
   @Autowired
-  public ThesisService(ThesisRepository thesisRepository, ThesisOfferRepository offerRepository, EmailService emailService) {
+  public ThesisService(ThesisRepository thesisRepository, ThesisOfferRepository offerRepository, EmailService emailService, StudentRepository studentRepository, TutorRepository tutorRepository) {
     this.thesisRepository = thesisRepository;
     this.offerRepository = offerRepository;
     this.emailService = emailService;
+    this.studentRepository = studentRepository;
+    this.tutorRepository = tutorRepository;
   }
 
   public void save(Thesis thesis) {
     this.thesisRepository.save(thesis);
+  }
+
+  public void save(ThesisDto thesis) {
+    Optional<Student> student = this.studentRepository.findByFkNum(thesis.getStudentId());
+    Optional<Tutor> tutor = this.tutorRepository.findById(thesis.getTutorId());
+
+    this.thesisRepository.save(new Thesis(2L, tutor.get(), student.get(), thesis.getContent(), thesis.getEmail(), ThesisStatus.SUBMITTED, new ArrayList<>()));
   }
 
   public void save(ThesisOffer offer) {
@@ -68,4 +85,7 @@ public class ThesisService {
     }
   }
 
+  public List<ThesisDto> getALL(){
+    return thesisRepository.findAll().stream().map((thesis -> new ThesisDto(thesis.getTutor().getId(), thesis.getStudent().getFkNum(), thesis.getContent(), thesis.getEmail()))).collect(Collectors.toList());
+  }
 }

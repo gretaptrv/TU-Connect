@@ -47,9 +47,10 @@ public class UserController {
     }
 
     @GetMapping
-    @Secured({})
-    public List<User> all() {
-        return userService.list();
+    @Secured({"STUDENTE", "TUTORE"})
+    public ResponseEntity<List<User>> all() {
+        List<User> list = userService.list();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/student")
